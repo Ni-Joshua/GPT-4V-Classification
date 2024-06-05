@@ -29,12 +29,12 @@ valloc2018 = json.load(open("train_val2018/val2018_locations.json"))
 valcat2018 = json.load(open("train_val2018/categories.json"))
 df = []
 cols = ["url", "scientific_name", "lat", "lon", "GPT_response"]
+random.seed(42)
 
 specieslist = ""
-# for j in range(0, len(valcat2018)):
-#     specieslist = specieslist +"(" +str(j+1) + ") " + valcat2018[j]['name'] + ", "
-# print(specieslist)
-random.seed(42)
+for j in range(0, len(valcat2018)):
+    specieslist = specieslist +"(" +str(j+1) + ") " + valcat2018[j]['name'] + ", "
+print(specieslist)
 for i in range(0, 100):
     print(i)
     temp = []
@@ -61,6 +61,36 @@ for i in range(0, 100):
     #encding image into base64
     image = encode_image(imagepath)
     #Prompting model and Allowing code to finish even if false flagged
+    #Short Prompt
+    # try: 
+    #     response = llm.chat.completions.create(
+    #         model ="GPT-4V",
+    #     messages=[
+    #         {
+    #         "role": "user",
+    #         "content": [
+    #             {"type": "text", "text": "There is a species in the image. The image was taken at the latitude " +str(lat) + " degrees and the longitude " +str(lon) + " degrees. Please provide only the scientific name of the species with no further explanation"},
+    #             {
+    #             "type": "image_url",
+    #             "image_url": {
+    #                 "url":  f"data:image/jpeg;base64,{image}"
+    #             },
+    #             },
+    #         ],
+    #         }
+    #     ],
+    #     max_tokens=50
+    #     )
+    # except Exception:
+    #     response = "Exception Error"
+    #     temp.append(response)
+    #     df.append(temp)
+    #     if(i%100 == 0):
+    #         df2 = np.array(copy.deepcopy(df))
+    #         df2 = pd.DataFrame(df2, columns = cols)
+    #         df2.to_csv("iNat2018_GPTFinished" + str(i) + ".csv", sep='\t', index=False)
+    #     continue
+    #long prompt
     try: 
         response = llm.chat.completions.create(
             model ="GPT-4V",
@@ -68,7 +98,7 @@ for i in range(0, 100):
             {
             "role": "user",
             "content": [
-                {"type": "text", "text": "There is a species in the image. The image was taken at the latitude " +str(lat) + " degrees and the longitude " +str(lon) + " degrees. Please provide only the scientific name of the species with no further explanation"},
+                {"type": "text", "text": "There is a species in the image. The image was taken at the latitude " +str(lat) + " degrees and the longitude " +str(lon) + " degrees. Here is a list of possible species options: " +specieslist +"Please give me the most probable species of the given image in the following format: (CLASS ID) SPECIES NAME. Please just give a short answer and do not provide explanations for your choice."},
                 {
                 "type": "image_url",
                 "image_url": {
@@ -90,6 +120,7 @@ for i in range(0, 100):
             df2.to_csv("iNat2018_GPTFinished" + str(i) + ".csv", sep='\t', index=False)
         continue
     temp.append(response.choices[0].message.content)
+    # temp.append("success")
     df.append(temp)
     # Creating save states(in case program crashes)
     if(i%100 == 0):
