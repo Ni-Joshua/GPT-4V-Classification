@@ -100,7 +100,7 @@ def top1acccalcSingleClass(data, name):
     print("Image Does Not Exist = " + str(DNE))
 
 
-birdsnap = pd.read_csv("BirdsnapGPTloc\Birdsnap_GPTFinishedloc1000.csv", delimiter='\t')
+birdsnap = pd.read_csv("BirdsnapGPTlocrerun\Birdsnap_GPTFinishedloc.csv", delimiter='\t')
 birdsnaplong = pd.read_csv("BirdsnapGPTloc(long)\Birdsnap_GPTFinishedloc1000.csv", delimiter = '\t')
 NAbirds = pd.read_csv("NABirds+GPT/NAbirdsplus_GPTFinished.csv", delimiter="\t")
 NAbirdslong = pd.read_csv("NABirds+GPT(Long)/NAbirdsplus_GPTFinished.csv", delimiter="\t")

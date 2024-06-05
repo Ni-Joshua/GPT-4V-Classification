@@ -54,65 +54,6 @@ for i in range(0, len(testbirdsnap.index)):
     #Short Prompt
     #Prompting model and Allowing code to finish even if false flagged
     print(np.isnan(lat), np.isnan(lon))
-    # if(np.isnan(lat) or np.isnan(lon)):
-    #     try: 
-    #         response = llm.chat.completions.create(
-    #             model ="GPT-4V",
-    #         messages=[
-    #             {
-    #             "role": "user",
-    #             "content": [
-    #                 {"type": "text", "text": "You are an Ornithologist. There is a bird in the image. Please give me only the name of its species and no additional information"},
-    #                 {
-    #                 "type": "image_url",
-    #                 "image_url": {
-    #                     "url":  np.array(row['url'])[0],
-    #                 },
-    #                 },
-    #             ],
-    #             }
-    #         ],
-    #         max_tokens=50
-    #         )
-    #     except Exception:
-    #         response = "Exception Error"
-    #         temp.append(response)
-    #         df.append(temp)
-    #         if(i%100 == 0):
-    #             df2 = np.array(copy.deepcopy(df))
-    #             df2 = pd.DataFrame(df2, columns = cols)
-    #             df2.to_csv("Birdsnap_GPTFinishedloc" + str(i) + ".csv", sep='\t', index=False)
-    #         continue
-    # else:
-    #     try: 
-    #         response = llm.chat.completions.create(
-    #             model ="GPT-4V",
-    #         messages=[
-    #             {
-    #             "role": "user",
-    #             "content": [
-    #                 {"type": "text", "text": "You are an Ornithologist. There is a bird in the image. The image was taken at the latitude " +str(lat) + " degrees and the longitude " +str(lon) + " degrees. Please give me only the name of its species and no additional information"},
-    #                 {
-    #                 "type": "image_url",
-    #                 "image_url": {
-    #                     "url":  np.array(row['url'])[0],
-    #                 },
-    #                 },
-    #             ],
-    #             }
-    #         ],
-    #         max_tokens=50
-    #         )
-    #     except Exception:
-    #         response = "Exception Error"
-    #         temp.append(response)
-    #         df.append(temp)
-    #         if(i%100 == 0):
-    #             df2 = np.array(copy.deepcopy(df))
-    #             df2 = pd.DataFrame(df2, columns = cols)
-    #             df2.to_csv("Birdsnap_GPTFinishedloc" + str(i) + ".csv", sep='\t', index=False)
-    #         continue
-    #Long prompt
     if(np.isnan(lat) or np.isnan(lon)):
         try: 
             response = llm.chat.completions.create(
@@ -121,7 +62,7 @@ for i in range(0, len(testbirdsnap.index)):
                 {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": "You are an Ornithologist. There is a bird in the image. The image was taken at the latitude " +str(lat) + " degrees and the longitude " +str(lon) + " degrees. Here is a list of possible species options: " +specieslist +"Please give me the most probable species of the given image in the following format: (CLASS ID) SPECIES NAME. Please just give a short answer and do not provide explanations for your choice."},
+                    {"type": "text", "text": "You are an Ornithologist. There is a bird in the image. Please give me only the name of its species and no additional information"},
                     {
                     "type": "image_url",
                     "image_url": {
@@ -150,7 +91,7 @@ for i in range(0, len(testbirdsnap.index)):
                 {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": "You are an Ornithologist. There is a bird in the image. Here is a list of possible species options: " +specieslist +"Please give me the most probable species of the given image in the following format: (CLASS ID) SPECIES NAME. Please just give a short answer and do not provide explanations for your choice."},
+                    {"type": "text", "text": "You are an Ornithologist. There is a bird in the image. The image was taken at the latitude " +str(lat) + " degrees and the longitude " +str(lon) + " degrees. Please give me only the name of its species and no additional information"},
                     {
                     "type": "image_url",
                     "image_url": {
@@ -171,6 +112,65 @@ for i in range(0, len(testbirdsnap.index)):
                 df2 = pd.DataFrame(df2, columns = cols)
                 df2.to_csv("Birdsnap_GPTFinishedloc" + str(i) + ".csv", sep='\t', index=False)
             continue
+    #Long prompt
+    # if(np.isnan(lat) or np.isnan(lon)):
+    #     try: 
+    #         response = llm.chat.completions.create(
+    #             model ="GPT-4V",
+    #         messages=[
+    #             {
+    #             "role": "user",
+    #             "content": [
+    #                 {"type": "text", "text": "You are an Ornithologist. There is a bird in the image. The image was taken at the latitude " +str(lat) + " degrees and the longitude " +str(lon) + " degrees. Here is a list of possible species options: " +specieslist +"Please give me the most probable species of the given image in the following format: (CLASS ID) SPECIES NAME. Please just give a short answer and do not provide explanations for your choice."},
+    #                 {
+    #                 "type": "image_url",
+    #                 "image_url": {
+    #                     "url":  np.array(row['url'])[0],
+    #                 },
+    #                 },
+    #             ],
+    #             }
+    #         ],
+    #         max_tokens=50
+    #         )
+    #     except Exception:
+    #         response = "Exception Error"
+    #         temp.append(response)
+    #         df.append(temp)
+    #         if(i%100 == 0):
+    #             df2 = np.array(copy.deepcopy(df))
+    #             df2 = pd.DataFrame(df2, columns = cols)
+    #             df2.to_csv("Birdsnap_GPTFinishedloc" + str(i) + ".csv", sep='\t', index=False)
+    #         continue
+    # else:
+    #     try: 
+    #         response = llm.chat.completions.create(
+    #             model ="GPT-4V",
+    #         messages=[
+    #             {
+    #             "role": "user",
+    #             "content": [
+    #                 {"type": "text", "text": "You are an Ornithologist. There is a bird in the image. Here is a list of possible species options: " +specieslist +"Please give me the most probable species of the given image in the following format: (CLASS ID) SPECIES NAME. Please just give a short answer and do not provide explanations for your choice."},
+    #                 {
+    #                 "type": "image_url",
+    #                 "image_url": {
+    #                     "url":  np.array(row['url'])[0],
+    #                 },
+    #                 },
+    #             ],
+    #             }
+    #         ],
+    #         max_tokens=50
+    #         )
+    #     except Exception:
+    #         response = "Exception Error"
+    #         temp.append(response)
+    #         df.append(temp)
+    #         if(i%100 == 0):
+    #             df2 = np.array(copy.deepcopy(df))
+    #             df2 = pd.DataFrame(df2, columns = cols)
+    #             df2.to_csv("Birdsnap_GPTFinishedloc" + str(i) + ".csv", sep='\t', index=False)
+    #         continue
     temp.append(response.choices[0].message.content)
     df.append(temp)
     #Creating save states(in case program crashes)
