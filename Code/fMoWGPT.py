@@ -67,6 +67,34 @@ for i in range(0, 100):
     #encoding image into base64
     image = encode_image(imagepath)
     #Prompting model and Allowing code to finish even if false flagged
+    # try: 
+    #     response = llm.chat.completions.create(
+    #         model ="GPT-4V",
+    #     messages=[
+    #         {
+    #         "role": "user",
+    #         "content": [
+    #             {"type": "text", "text": "There is a place shown in this image. Here is a list of names of the possible places: " + loclist +"Please give me the most probable name shown by the given image in the following format: (CLASS ID) LOCATION NAME. Please just give a short answer and do not provide explanations for your choice."},
+    #             {
+    #             "type": "image_url",
+    #             "image_url": {
+    #                 "url":  f"data:image/jpeg;base64,{image}"
+    #             },
+    #             },
+    #         ],
+    #         }
+    #     ],
+    #     max_tokens=50
+    #     )
+    # except Exception:
+    #     response = "Exception Error"
+    #     temp.append(response)
+    #     df.append(temp)
+    #     if(i%100 == 0):
+    #         df2 = np.array(copy.deepcopy(df))
+    #         df2 = pd.DataFrame(df2, columns = cols)
+    #         df2.to_csv("fMoW_GPTFinished" + str(i) + ".csv", sep='\t', index=False)
+    #     continue
     try: 
         response = llm.chat.completions.create(
             model ="GPT-4V",
@@ -74,7 +102,7 @@ for i in range(0, 100):
             {
             "role": "user",
             "content": [
-                {"type": "text", "text": "There is a place shown in this image. Here is a list of names of the possible places: " + loclist +"Please give me the most probable name shown by the given image in the following format: (CLASS ID) LOCATION NAME. Please just give a short answer and do not provide explanations for your choice."},
+                {"type": "text", "text": "There is a place shown in this image. Please identify the type of place shown with no further explanation"},
                 {
                 "type": "image_url",
                 "image_url": {

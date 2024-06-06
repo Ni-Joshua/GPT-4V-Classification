@@ -85,7 +85,8 @@ def top1acccalcSingleClass(data, name):
             if(data.iloc[i]['scientific_name'] in data.iloc[i]['GPT_response']):
                 truecount+=1
         except Exception:
-            if(data.iloc[i]['category'] in data.iloc[i]['GPT_response']):
+            if(data.iloc[i]['category'].replace("_", " ") in data.iloc[i]['GPT_response']):
+                print(data.iloc[i]['url'])
                 truecount+=1
 
     #Print results
@@ -100,26 +101,26 @@ def top1acccalcSingleClass(data, name):
     print("Image Does Not Exist = " + str(DNE))
 
 
-birdsnap = pd.read_csv("BirdsnapGPTlocrerun\Birdsnap_GPTFinishedloc.csv", delimiter='\t')
-birdsnaplong = pd.read_csv("BirdsnapGPTloc(long)\Birdsnap_GPTFinishedloc1000.csv", delimiter = '\t')
-NAbirds = pd.read_csv("NABirds+GPT/NAbirdsplus_GPTFinished.csv", delimiter="\t")
-NAbirdslong = pd.read_csv("NABirds+GPT(Long)/NAbirdsplus_GPTFinished.csv", delimiter="\t")
-yfcc = pd.read_csv("yfcc100MGPT\yfcc100M_GPTFinished.csv", delimiter="\t")
-birdsnapplus = pd.read_csv("Birdsnap+GPT\Birdsnapplus_GPTFinished.csv", delimiter = '\t')
-iNat2017 = pd.read_csv("iNat2017GPT\iNat2017_GPTFinished.csv", delimiter="\t")
-iNat2017long = pd.read_csv("iNat2017GPT(long)\iNat2017_GPTFinished.csv", delimiter="\t")
-iNat2018 = pd.read_csv("INat2018GPT\iNat2018_GPTFinished.csv", delimiter="\t")
-iNat2018long = pd.read_csv("INat2018GPT(long)\iNat2018_GPTFinished.csv", delimiter="\t")
-fMoW = pd.read_csv("fMoWGPT/fMoW_GPTFinished.csv", delimiter="\t")
+# birdsnap = pd.read_csv("BirdsnapGPTlocrerun\Birdsnap_GPTFinishedloc.csv", delimiter='\t')
+# birdsnaplong = pd.read_csv("BirdsnapGPTloc(long)\Birdsnap_GPTFinishedloc1000.csv", delimiter = '\t')
+# NAbirds = pd.read_csv("NABirds+GPT/NAbirdsplus_GPTFinished.csv", delimiter="\t")
+# NAbirdslong = pd.read_csv("NABirds+GPT(Long)/NAbirdsplus_GPTFinished.csv", delimiter="\t")
+# yfcc = pd.read_csv("yfcc100MGPT\yfcc100M_GPTFinished.csv", delimiter="\t")
+# birdsnapplus = pd.read_csv("Birdsnap+GPT\Birdsnapplus_GPTFinished.csv", delimiter = '\t')
+# iNat2017 = pd.read_csv("iNat2017GPT\iNat2017_GPTFinished.csv", delimiter="\t")
+# iNat2017long = pd.read_csv("iNat2017GPT(long)\iNat2017_GPTFinished.csv", delimiter="\t")
+# iNat2018 = pd.read_csv("INat2018GPT\iNat2018_GPTFinished.csv", delimiter="\t")
+# iNat2018long = pd.read_csv("INat2018GPT(long)\iNat2018_GPTFinished.csv", delimiter="\t")
+fMoW = pd.read_csv("fMoWGPT(short)/fMoW_GPTFinished.csv", delimiter="\t")
 
-top1acccalc(birdsnap, "Birdsnap")
-top1acccalc(birdsnaplong, "Birdsnaplong")
-top1acccalc(birdsnapplus, "Birdsnap+")
-top1acccalc(NAbirds, "NAbirds")
-top1acccalc(NAbirdslong, "NAbirdslong")
-top1acccalcSingleClass(iNat2017, "iNat2017")
-top1acccalcSingleClass(iNat2017long, "iNat2017long")
-top1acccalcSingleClass(iNat2018, "iNat2018")
-top1acccalcSingleClass(iNat2018long, "iNat2018long")
-top1acccalcSingleClass(yfcc, "yfcc100M")
+# top1acccalc(birdsnap, "Birdsnap")
+# top1acccalc(birdsnaplong, "Birdsnaplong")
+# top1acccalc(birdsnapplus, "Birdsnap+")
+# top1acccalc(NAbirds, "NAbirds")
+# top1acccalc(NAbirdslong, "NAbirdslong")
+# top1acccalcSingleClass(iNat2017, "iNat2017")
+# top1acccalcSingleClass(iNat2017long, "iNat2017long")
+# top1acccalcSingleClass(iNat2018, "iNat2018")
+# top1acccalcSingleClass(iNat2018long, "iNat2018long")
+# top1acccalcSingleClass(yfcc, "yfcc100M")
 top1acccalcSingleClass(fMoW, "fMoW")
